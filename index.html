@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#171a24">
+  <!-- Saved to the home screen it opens as an app of its own, full screen, with its camera (loader.js). -->
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" href="./apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Slime Arena">
+  <title>Slime Arena · Mando</title>
+  <style>
+    :root { --bg: #171a24; --text: #eef1f7; --muted: #9aa3b8; --accent: #7ef0c2; }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); font: 15px/1.35 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; overscroll-behavior: none; }
+    body { overflow: hidden; }
+    #scan-screen {
+      position: fixed; inset: 0; display: grid; align-content: center; justify-items: center; gap: 14px;
+      padding: max(16px, env(safe-area-inset-top)) 24px max(16px, env(safe-area-inset-bottom)); text-align: center;
+      background: radial-gradient(110% 50% at 50% -10%, #7ef0c233, transparent 60%), var(--bg);
+    }
+    h1 { margin: 0; font-size: clamp(30px, 10vw, 42px); line-height: 1.1; letter-spacing: .03em; color: var(--accent); }
+    p { margin: 0; max-width: 34ch; color: var(--muted); }
+    #status { color: var(--text); }
+    button { min-height: 44px; padding: 0 24px; border: 0; border-radius: 999px; font: inherit; font-size: 16px; font-weight: 700; line-height: 1; color: #102018; background: var(--accent); cursor: pointer; }
+    button.ghost { color: var(--accent); background: transparent; border: 2px solid var(--accent); }
+    video { width: min(78vw, 320px, 48vh); aspect-ratio: 1; object-fit: cover; border-radius: 16px; background: #000; }
+    #install { font-size: 13px; }
+    /* The room's page, over everything; it keeps clear of the notch and the home bar itself cannot see from a frame. */
+    #room {
+      position: fixed; top: env(safe-area-inset-top); right: env(safe-area-inset-right); bottom: env(safe-area-inset-bottom); left: env(safe-area-inset-left);
+      width: calc(100% - env(safe-area-inset-left) - env(safe-area-inset-right)); height: calc(100% - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+      border: 0; background: var(--bg);
+    }
+    /* After the room has ended: one button to scan the next QR, over the page's own message. */
+    #again { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom)); transform: translateX(-50%); box-shadow: 0 6px 24px #0008; }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+  <main id="scan-screen">
+    <h1>Slime Arena</h1>
+    <video id="video" playsinline muted hidden aria-hidden="true"></video>
+    <p id="status" role="status" aria-live="polite">Escanea el QR de la pantalla del juego para unirte.</p>
+    <button id="scan" type="button">Escanear QR</button>
+    <p id="install" hidden>Para jugar a pantalla completa en el iPhone: <b>Compartir → Añadir a pantalla de inicio</b>, y abre el mando desde su icono.</p>
+  </main>
+  <iframe id="room" title="Slime Arena" allow="fullscreen; screen-wake-lock; autoplay" referrerpolicy="no-referrer" hidden></iframe>
+  <button id="again" type="button" hidden>Escanear otro QR</button>
+  <script type="module" src="./loader.js"></script>
+</body>
+</html>
